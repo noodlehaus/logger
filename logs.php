@@ -11,6 +11,13 @@ function logger($path, $condition = null) {
       E_USER_ERROR
     );
 
+  if (!file_exists($path)) {
+    !@touch($path) && trigger_error(
+      "Unable to create log file [{$path}].",
+      E_USER_ERROR
+    );
+  }
+
   if (!is_writable($path))
     trigger_error(
       "logs\logger(): Log file [{$path}] is not writeable!",
