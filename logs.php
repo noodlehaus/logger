@@ -1,15 +1,12 @@
 <?php
 namespace noodlehaus\logs;
 
-function logger($path, $condition = null) {
+function logger($path, $condition = true) {
 
-  $condition = $condition ? $condition : function () { return true; };
-
-  if (!is_callable($condition))
-    trigger_error(
-      "logs\logger(): Second argument has to be a callable",
-      E_USER_ERROR
-    );
+  if (is_callable($condition))
+    $condition = $condition();
+  else
+    $condition = !!$condition;
 
   if (!file_exists($path)) {
     !@touch($path) && trigger_error(
@@ -24,7 +21,7 @@ function logger($path, $condition = null) {
       E_USER_ERROR
     );
 
-  if ($condition() !== true)
+  if ($condition !== true)
     return function () {};
 
   return function ($sfmt) use ($path) {

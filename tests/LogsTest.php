@@ -24,12 +24,11 @@ class LogsTest extends PHPUnit_Framework_TestCase {
     );
   }
 
-  public function testLoggerCondition() {
+  public function testLoggerConditionCallable() {
 
     $logger1 = logs\logger(self::LOGFILE, function () {
       return (getenv('PHP_ENV') === 'TEST');
     });
-
     $logger1('LoggerCondition');
     $this->assertEquals('', trim(file_get_contents(self::LOGFILE)));
 
@@ -37,7 +36,20 @@ class LogsTest extends PHPUnit_Framework_TestCase {
     $logger2 = logs\logger(self::LOGFILE, function () {
       return (getenv('PHP_ENV') === 'TEST');
     });
+    $logger2('LoggerCondition');
+    $this->assertEquals(
+      'LoggerCondition',
+      trim(file_get_contents(self::LOGFILE))
+    );
+  }
 
+  public function testLoggerConditionBoolean() {
+
+    $logger1 = logs\logger(self::LOGFILE, false);
+    $logger1('LoggerCondition');
+    $this->assertEquals('', trim(file_get_contents(self::LOGFILE)));
+
+    $logger2 = logs\logger(self::LOGFILE, true);
     $logger2('LoggerCondition');
     $this->assertEquals(
       'LoggerCondition',
@@ -58,11 +70,6 @@ class LogsTest extends PHPUnit_Framework_TestCase {
     }
     $this->setExpectedException('PHPUnit_Framework_Error');
     $logger = logs\logger(__DIR__.'/readonly.log');
-  }
-
-  public function testLoggerInvalidCondition() {
-    $this->setExpectedException('PHPUnit_Framework_Error');
-    $logger = logs\logger(self::LOGFILE, true);
   }
 
   public function testLoggerFreshFile() {
