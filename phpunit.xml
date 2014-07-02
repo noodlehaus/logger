@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<phpunit stderr="true" colors="true" bootstrap="vendor/autoload.php">
+  <testsuite name="LOGS Tests">
+    <directory>tests</directory>
+  </testsuite>
+  <logging>
+    <log type="coverage-clover" target="build/logs/clover.xml" />
+  </logging>
+</phpunit>
