@@ -45,9 +45,19 @@ class LogsTest extends PHPUnit_Framework_TestCase {
     );
   }
 
-  public function testLoggerInvalidFile() {
+  public function testLoggerInvalidPath() {
     $this->setExpectedException('PHPUnit_Framework_Error');
     $logger = logs\logger('/some/invalid/path');
+  }
+
+  public function testLoggerInvalidFile() {
+    $file_ro = __DIR__.'/readonly.log';
+    if (!file_exists($file_ro)) {
+      touch($file_ro);
+      chmod($file_ro, 0444);
+    }
+    $this->setExpectedException('PHPUnit_Framework_Error');
+    $logger = logs\logger(__DIR__.'/readonly.log');
   }
 
   public function testLoggerInvalidCondition() {
