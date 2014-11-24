@@ -13,11 +13,6 @@
   "require": {
     "php": ">= 5.4.0"
   },
-  "require-dev": {
-    "ext-xdebug": ">= 2.1",
-    "phpunit/phpunit": "4.1.*",
-    "satooshi/php-coveralls": "dev-master"
-  },
   "autoload": {
     "files": [
       "logs.php"

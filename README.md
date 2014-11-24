@@ -1,8 +1,5 @@
 # LOGS
 
-[![Build Status](https://travis-ci.org/noodlehaus/logs.svg)](https://travis-ci.org/noodlehaus/logs)
-[![Coverage Status](https://coveralls.io/repos/noodlehaus/logs/badge.png?branch=master)](https://coveralls.io/r/noodlehaus/logs?branch=master)
-
 Simple file logger for your application.
 
 ## Example
