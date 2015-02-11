@@ -1,10 +1,3 @@
-# LOGGER
-
-A terrible logger utility for PHP.
-
-## Example
-
-```php
 <?php
 require __DIR__.'/logger.php';
 
@@ -23,8 +16,3 @@ $info('This should show up');
 # defaults
 $always = logger\create('./file.log');
 $always('This always gets logged.');
-```
-
-## License
-
-MIT <http://noodlehaus.mit-license.org>
