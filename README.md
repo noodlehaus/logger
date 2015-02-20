@@ -20,6 +20,10 @@ $info = logger\create('./info.log', function () {
 });
 $info('This should show up');
 
+# works like printf
+$name = 'noodlehaus';
+$info('Hello there %s', $name);
+
 # defaults
 $always = logger\create('./file.log');
 $always('This always gets logged.');
