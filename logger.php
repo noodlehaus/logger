@@ -3,16 +3,7 @@ namespace badphp\logger;
 
 function create($path, $cond = true) {
 
-  $fd = fopen($path, 'a+');
-
-  if ($fd === false) {
-    trigger_error(
-      __FUNCTION__.": Failed to create [$path]",
-      E_USER_ERROR
-    );
-  }
-
-  $writer = function () use ($fd) {
+  $writer = function () use ($path) {
 
     $args = func_get_args();
     $argn = count($args);
@@ -27,11 +18,11 @@ function create($path, $cond = true) {
       $msg = array_shift($args);
     }
 
-    return fwrite($fd, $msg.PHP_EOL);
+    return error_log($msg."\n", 3, $path);
   };
 
   if (is_callable($cond)) {
-    return function () use ($fd, $cond, $writer) {
+    return function () use ($cond, $writer) {
       if (!$cond()) {
         return false;
       }
@@ -47,7 +38,7 @@ function create($path, $cond = true) {
     };
   }
 
-  return function () use ($fd, $writer) {
+  return function () use ($writer) {
     return call_user_func_array($writer, func_get_args());
   };
 }
