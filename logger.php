@@ -1,44 +1,31 @@
 <?php
-namespace badphp\logger;
+function logger($path, $condition = true) {
 
-function create($path, $cond = true) {
-
-  $writer = function () use ($path) {
-
-    $args = func_get_args();
+  $writer = function (...$args) use ($path) {
     $argn = count($args);
-
     if (!$argn) {
       return false;
     }
-
-    if ($argn > 1) {
-      $msg = call_user_func_array('sprintf', $args);
-    } else {
-      $msg = array_shift($args);
-    }
-
+    $msg = ($argn > 1 ? sprintf(...$args) : array_shift($args));
     return error_log($msg."\n", 3, $path);
   };
 
-  if (is_callable($cond)) {
-    return function () use ($cond, $writer) {
-      if (!$cond()) {
+  if (is_callable($condition)) {
+    return function (...$args) use ($condition, $writer) {
+      if (!$condition()) {
         return false;
       }
-      return call_user_func_array($writer, func_get_args());
+      return $writer(...$args);
     };
   }
 
-  $cond = !!$cond;
+  $condition = !!$condition;
 
-  if (!$cond) {
-    return function () {
-      return true;
-    };
+  if (!$condition) {
+    return function () { return true; };
   }
 
-  return function () use ($writer) {
-    return call_user_func_array($writer, func_get_args());
+  return function (...$args) use ($writer) {
+    return $writer(...$args);
   };
 }
