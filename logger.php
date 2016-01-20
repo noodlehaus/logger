@@ -1,4 +1,9 @@
 <?php
+
+# @author Jesus A. Domingo <jesus.domingo@gmail.com>
+# @license MIT
+
+# Creates logger callable
 function logger($path, $condition = true) {
 
   $writer = function (...$args) use ($path) {
