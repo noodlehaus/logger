@@ -1,14 +1,14 @@
 {
-  "name": "badphp/logger",
+  "name": "noodlehaus/logger",
   "type": "library",
   "description": "simple logging",
   "keywords": ["logging", "logs", "logfile", "micro", "microphp"],
-  "homepage": "https://github.com/badphp/logger",
+  "homepage": "https://github.com/noodlehaus/logger",
   "license": "MIT",
   "authors": [{
     "name": "Jesus A. Domingo",
     "role": "Developer",
-    "homepage": "http://github.com/badphp"
+    "homepage": "http://github.com/noodlehaus"
   }],
   "require": {
     "php": ">= 5.6.0"
