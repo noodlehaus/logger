@@ -1,20 +1,17 @@
 <?php
 require __DIR__.'/logger.php';
 
-# logger is active based on truthiness of an expression
-$debug = logger('./debug.log', getenv('PHP_ENV') === 'TEST');
-$debug('This will show up if PHP_ENV is set to TEST');
+# use default priority = LOG_ERR and prefix map
+$log = logger('./app.log');
+$log(LOG_INFO, 'Application started.');
+$log(LOG_NOTICE, 'Hostname is %s', 'foo');
+$log(LOG_DEBUG, '1 + 1 is 2');
+$log(LOG_ERR, 'OMG something went wrong!');
 
-# logger is active based result of callable
-$info = logger('./info.log', function () {
-  return true;
-});
-$info('This should show up');
+# more verbose logging, change some entry prefixes
+$debug = logger('./app.log', LOG_DEBUG, [
+  LOG_DEBUG => 'LOOK_AT_THIS'
+]);
 
-# works like printf
-$name = 'noodlehaus';
-$info('Hello there %s', $name);
-
-# defaults
-$always = logger('./file.log');
-$always('This always gets logged.');
+$debug(LOG_ERR, 'OMG the server is on fire!');
+$debug(LOG_DEBUG, 'We should check if the server is on fire');
