@@ -26,4 +26,4 @@ $debug(LOG_DEBUG, 'We should check if the server is on fire');
 
 ## License
 
-MIT <http://noodlehaus.mit-license.org>
+MIT
